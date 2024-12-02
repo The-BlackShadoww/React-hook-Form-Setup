@@ -1,10 +1,11 @@
+"use client";
 import React from "react";
 
 interface FieldProps {
   label?: string;
   children: React.ReactNode;
   htmlFor?: string;
-  error?: { message: string };
+  error?: string;
 }
 const Field = ({ label, children, htmlFor, error }: FieldProps) => {
   //   const id = htmlFor || Math.random().toString(36).substring(7);
@@ -17,13 +18,14 @@ const Field = ({ label, children, htmlFor, error }: FieldProps) => {
         </label>
       )}
       {children}
-      {!!error && <div className="text-red-500">{error.message}</div>}
+      {!!error && <div className="text-red-500">{error}</div>}
     </div>
   );
 };
 
 const getChildId = (children: React.ReactNode): string | undefined => {
-  const child = React.Children.only(children) as React.ReactElement;
+  //   const child = React.Children.only(children) as React.ReactElement;
+  const child = React.Children.toArray(children)[0] as React.ReactElement;
 
   if ("id" in child?.props) {
     return child.props.id;
