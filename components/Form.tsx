@@ -18,10 +18,21 @@ const Form = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FormData>();
 
   const formSubmit = (data: FormData) => {
     console.log(data);
+
+    const user = { email: "x@example.com", password: "123456789" };
+    const found = data.email === user.email && data.password === user.password;
+
+    if (!found) {
+      setError("root.random", {
+        message: `User not found`,
+        type: "random",
+      });
+    }
   };
 
   return (
@@ -30,7 +41,7 @@ const Form = () => {
         onSubmit={handleSubmit(formSubmit)}
         className="w-[580px] flex flex-col gap-y-4 mt-20 p-4 border"
       >
-        <FieldSet label="User Details">
+        <FieldSet label="Log In">
           <Field label="Name">
             <input
               {...register("name", { required: "Name is required" })}
@@ -38,7 +49,9 @@ const Form = () => {
               name="name"
               id="name"
               placeholder="Enter your name"
-              className="w-full"
+              className={`w-full ${
+                !!errors.name ? "border-2 border-red-500" : "border-none"
+              }`}
             />
             {/* <ErrorMessage errors={errors} name="name" /> */}
             <ErrorMessage
@@ -56,7 +69,9 @@ const Form = () => {
               name="email"
               id="email"
               placeholder="Enter your email"
-              className="w-full"
+              className={`w-full ${
+                !!errors.email ? "border-2 border-red-500" : "border-none"
+              }`}
             />{" "}
             <ErrorMessage
               errors={errors}
@@ -79,21 +94,19 @@ const Form = () => {
               name="password"
               id="password"
               placeholder="Enter your password"
-              className="w-full"
+              className={`w-full ${
+                !!errors.password ? "border-2 border-red-500" : "border-none"
+              }`}
             />
           </Field>
-          <Field label="Confirm password">
-            <input
-              {...register("confirmPassword")}
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              placeholder="Confirm password"
-              className="w-full"
-            />
-          </Field>
+          {/* Global error */}
+          <div className="my-2">
+            <p className="text-red-500 font-bold">
+              {errors?.root?.random?.message}
+            </p>
+          </div>
           <Field>
-            <button type="submit" className="bg-blue-500 rounded-sm p-2">
+            <button type="submit" className="w-full bg-blue-500 rounded-sm p-2">
               Submit
             </button>
           </Field>
