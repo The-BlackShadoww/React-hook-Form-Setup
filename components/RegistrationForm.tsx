@@ -3,7 +3,7 @@
 import React from "react";
 import FieldSet from "./FieldSet";
 import Field from "./Field";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 interface FormData {
@@ -18,8 +18,14 @@ const RegistrationForm = () => {
     handleSubmit,
     formState: { errors },
     setError,
+    control,
   } = useForm<FormData>({
     criteriaMode: "all",
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    name: "socials",
+    control,
   });
 
   const formSubmit = (data: FormData) => {
@@ -111,6 +117,28 @@ const RegistrationForm = () => {
               }`}
             />
           </Field>
+        </FieldSet>
+        <FieldSet label="Socials">
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id}>
+                <Field label="Social Name">
+                  <input
+                    {...register(`socials[${index}].name`)}
+                    type="text"
+                    id={`socials.${index}.name`}
+                    name={`socials.${index}.name`}
+                  />
+                </Field>
+              </div>
+            );
+          })}
+          <button
+            className="bg-orange-500 rounded-sm p-2 w-40"
+            onClick={() => append({ name: "", url: "" })}
+          >
+            Add A Social Handle
+          </button>
         </FieldSet>
         {/* Global error */}
         <div className="my-2">
