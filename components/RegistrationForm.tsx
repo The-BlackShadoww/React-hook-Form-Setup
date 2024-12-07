@@ -3,15 +3,24 @@
 import React from "react";
 import FieldSet from "./FieldSet";
 import Field from "./Field";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import NumberInput from "./NumberInput";
+interface SocialHandle {
+  name: string;
+  url: string;
+}
 
 interface FormData {
+  picture: string;
   fname: string;
+  age: number;
   email: string;
   password: string;
   confirmPassword: string;
+  socials: SocialHandle[];
 }
+
 const RegistrationForm = () => {
   const {
     register,
@@ -19,9 +28,19 @@ const RegistrationForm = () => {
     formState: { errors },
     setError,
     control,
+    watch,
   } = useForm<FormData>({
     criteriaMode: "all",
   });
+
+  // Watch specific fields or the entire form
+  const watchedData = watch(); // To watch the entire form data
+  const watchedAge = watch("age"); // To watch only the 'age' field
+  const watchedFname = watch("fname"); // To watch only the 'age' field
+
+  console.log("Form Data:", watchedData); // Logs real-time form data
+  console.log("Watched Age:", watchedAge); // Logs real-time 'age' value
+  console.log("Watched Full Name:", watchedFname); // Logs real-time 'age' value
 
   const { fields, append, remove } = useFieldArray({
     name: "socials",
@@ -32,7 +51,7 @@ const RegistrationForm = () => {
     console.log(data);
 
     setError("root.random", {
-      message: `User not found`,
+      message: `Registration unsuccessful`,
       type: "random",
     });
   };
@@ -43,6 +62,23 @@ const RegistrationForm = () => {
         className="w-[580px] flex flex-col gap-y-4 mb-20 p-4 border"
       >
         <FieldSet label="Registration">
+          <Field label="Picture (Type has to be file)">
+            <input
+              {...register("picture", {
+                required: "Picture is required",
+              })}
+              type="file"
+              id="picture"
+              name="picture"
+            />
+            <ErrorMessage
+              errors={errors}
+              name="picture"
+              render={({ message }) => (
+                <p className="text-red-500">{message}</p>
+              )}
+            />
+          </Field>
           <Field label="Full Name">
             <input
               {...register("fname", { required: "Full name is required" })}
@@ -50,11 +86,38 @@ const RegistrationForm = () => {
               name="fname"
               id="fname"
               placeholder="Full Name"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md text-black"
             />{" "}
             <ErrorMessage
               errors={errors}
               name="fname"
+              render={({ message }) => (
+                <p className="text-red-500">{message}</p>
+              )}
+            />
+          </Field>
+          {/* Handling external component with Controller */}
+          <Field label="Age (This is an external component)">
+            <Controller
+              name="age"
+              control={control}
+              defaultValue={1}
+              render={({ field: { ref, ...field } }) => (
+                <NumberInput
+                  id="age"
+                  className={`p-2 border box-border w-full rounded-md text-black ${
+                    !!errors.age ? "border-red-500" : "border-gray-200"
+                  }`}
+                  {...field}
+                />
+              )}
+              rules={{
+                max: { value: 100, message: "Age can between 0 to 100" },
+              }}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="age"
               render={({ message }) => (
                 <p className="text-red-500">{message}</p>
               )}
@@ -112,7 +175,7 @@ const RegistrationForm = () => {
               name="confirmPassword"
               id="confirmPassword"
               placeholder="Confirm password"
-              className={`w-full p-2 border border-gray-300 rounded-md ${
+              className={`w-full p-2 border border-gray-300 rounded-md text-black${
                 !!errors.confirmPassword ? "border-red-500" : ""
               }`}
             />
@@ -121,20 +184,39 @@ const RegistrationForm = () => {
         <FieldSet label="Socials">
           {fields.map((field, index) => {
             return (
-              <div key={field.id}>
+              <div
+                key={field.id}
+                className="flex justify-between items-center w-max"
+              >
                 <Field label="Social Name">
                   <input
-                    {...register(`socials[${index}].name`)}
+                    className="p-2 border box-border w-full rounded-md"
+                    {...register(`socials[${index}].name` as keyof FormData)}
                     type="text"
                     id={`socials.${index}.name`}
                     name={`socials.${index}.name`}
                   />
                 </Field>
+                <Field label="Social URL">
+                  <input
+                    className="p-2 border box-border w-full rounded-md"
+                    type="text"
+                    {...register(`socials[${index}].url` as keyof FormData)}
+                    id={`socials[${index}].url`}
+                    name={`socials[${index}].url`}
+                  />
+                </Field>
+                <button
+                  onClick={() => remove(index)}
+                  className="mt-8 mr-2 text-2xl"
+                >
+                  &#8722;
+                </button>
               </div>
             );
           })}
           <button
-            className="bg-orange-500 rounded-sm p-2 w-40"
+            className="bg-orange-500 rounded-sm p-2 w-40 mt-4"
             onClick={() => append({ name: "", url: "" })}
           >
             Add A Social Handle
