@@ -1,0 +1,7 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "editor.cursorBlinking": "expand",
+    "files.autoSave": "afterDelay"
+}

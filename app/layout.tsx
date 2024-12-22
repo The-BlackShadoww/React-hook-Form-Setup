@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ReactQueryClient from "@/utils/react-query-client";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProductProvider from "@/providers/ProductProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,11 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <ReactQueryClient>
+        <ProductProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </body>
+        </ProductProvider>
+      </ReactQueryClient>
     </html>
   );
 }
