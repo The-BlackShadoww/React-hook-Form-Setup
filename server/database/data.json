@@ -2,19 +2,11 @@
   "products": [
     {
       "id": "1",
-      "title": "iPhone 9",
+      "title": "iPhone 9999",
       "description": "An apple mobile which is nothing like apple",
-      "price": 549,
+      "price": 549000,
       "rating": 4.69,
       "thumbnail": "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-    },
-    {
-      "id": "2",
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "rating": 4.44,
-      "thumbnail": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
     },
     {
       "id": "3",
@@ -34,7 +26,7 @@
     },
     {
       "id": "5",
-      "title": "Huawei P30",
+      "title": "Huawei Z30",
       "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
       "price": 499,
       "rating": 4.09,
@@ -98,7 +90,7 @@
     },
     {
       "id": "13",
-      "title": "Fog Scent Xpressio Perfume",
+      "title": "Fog Scent Xpressio Perfume Premium",
       "description": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men",
       "price": 13,
       "rating": 4.59,
@@ -257,36 +249,12 @@
       "thumbnail": "https://cdn.dummyjson.com/product-images/32/thumbnail.jpg"
     },
     {
-      "id": "1501ddb8-33e9-45b1-a7a9-b16a78b35c7b",
-      "title": "bbbbaa",
-      "description": "nnnnn",
-      "price": 3,
+      "id": "7412155c-bfaa-42cc-9038-361dfb54e5d8",
+      "title": "New Product",
+      "description": "This is the new product",
+      "price": 100,
       "rating": 5,
-      "thumbnail": "kjjl"
-    },
-    {
-      "id": "c0550154-58e4-496b-8c14-e4c4cf730651",
-      "title": "bbbbaa",
-      "description": "nnnnn",
-      "price": 3,
-      "rating": 5,
-      "thumbnail": "kjjl"
-    },
-    {
-      "id": "aecf1713-a230-47dc-83fc-57959962eddd",
-      "title": "gfg",
-      "description": "fgfg",
-      "price": 3,
-      "rating": 5,
-      "thumbnail": "fgfg"
-    },
-    {
-      "id": "77dbc929-c4ed-43a8-a6d0-507de095f329",
-      "title": "test",
-      "description": "test desc",
-      "price": 3,
-      "rating": 5,
-      "thumbnail": "test"
+      "thumbnail": "https://unsplash.com/photos/man-playing-soccer-during-daytime-Z0KjmjxUsKs"
     }
   ]
 }

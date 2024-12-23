@@ -5,6 +5,7 @@ import ProductsList from "@/components/products/ProductsList";
 import React from "react";
 import { ProductContext } from "@/contexts";
 import { useContext } from "react";
+import AddProduct from "./AddProduct";
 
 const Products = () => {
   const productContext = useContext(ProductContext);
@@ -16,6 +17,7 @@ const Products = () => {
 
   return (
     <div className="flex gap-x-4 justify-between">
+      <AddProduct />
       <ProductsList />
       <ProductDetails id={productId} />
     </div>
